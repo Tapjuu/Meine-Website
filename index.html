@@ -160,8 +160,21 @@ function addComment() {
     } else {
         alert('Bitte gib einen Kommentar ein.');
     }
+ // Bildvorschau anzeigen
+function previewImage(event) {
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        let imgElement = document.createElement('img');
+        imgElement.src = e.target.result;
+        imgElement.classList.add('image-preview');
+        document.getElementById('image-preview-container').appendChild(imgElement);
+    };
+    reader.readAsDataURL(file);
 }
 </script>
 
 </body>
 </html>
+
+
