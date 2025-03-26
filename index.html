@@ -101,9 +101,10 @@
 // Monat und Tag anzeigen
 function showMonth(month) {
     let calendar = document.getElementById('calendar');
-    calendar.innerHTML = ''; // Clear previous calendar
+    calendar.innerHTML = ''; // Vorherige Inhalte löschen
+    calendar.style.display = 'block'; // Falls versteckt, anzeigen
 
-    let daysInMonth = new Date(2025, month, 0).getDate(); // Get number of days in the month
+    let daysInMonth = new Date(2025, month, 0).getDate(); // Anzahl der Tage im Monat
 
     for (let i = 1; i <= daysInMonth; i++) {
         let day = document.createElement('div');
@@ -113,6 +114,7 @@ function showMonth(month) {
         calendar.appendChild(day);
     }
 }
+
 
 // Tagesdetails anzeigen
 function showDay(day, month) {
