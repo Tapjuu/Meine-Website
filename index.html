@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Zeitstrahl</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; }
+        h1 { text-align: center; }
+        
+        .month { 
+            display: inline-block; 
+            padding: 10px; 
+            margin: 5px; 
+            background-color: #f0f0f0; 
+            cursor: pointer; 
+            border-radius: 5px; 
+        }
+        
+        .month:hover { background-color: #ddd; }
+        
+        #calendar { 
+            margin-top: 20px; 
+            text-align: center;
+        }
+        
+        .day { 
+            display: inline-block; 
+            width: 30px; 
+            height: 30px; 
+            text-align: center; 
+            margin: 2px; 
+            cursor: pointer; 
+            background-color: #eee; 
+            border-radius: 5px; 
+        }
+        
+        .day:hover { background-color: #ddd; }
+        
+        #day-details {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .note-input, .comment-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .comment-box {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>2025 Zeitstrahl</h1>
+<p style="text-align: center;">Klicke auf einen Monat, um die Tage zu sehen.</p>
+
+<!-- Monatsansicht -->
+<div style="text-align: center;">
+    <div class="month" onclick="showMonth(1)">Januar</div>
+    <div class="month" onclick="showMonth(2)">Februar</div>
+    <div class="month" onclick="showMonth(3)">März</div>
+    <div class="month" onclick="showMonth(4)">April</div>
+    <div class="month" onclick="showMonth(5)">Mai</div>
+    <div class="month" onclick="showMonth(6)">Juni</div>
+    <div class="month" onclick="showMonth(7)">Juli</div>
+    <div class="month" onclick="showMonth(8)">August</div>
+    <div class="month" onclick="showMonth(9)">September</div>
+    <div class="month" onclick="showMonth(10)">Oktober</div>
+    <div class="month" onclick="showMonth(11)">November</div>
+    <div class="month" onclick="showMonth(12)">Dezember</div>
+</div>
+
+<!-- Kalender für den gewählten Monat -->
+<div id="calendar"></div>
+
+<!-- Tagesdetails anzeigen -->
+<div id="day-details">
+    <h2 id="day-header"></h2>
+    <textarea class="note-input" id="note-input" placeholder="Notiz für diesen Tag..."></textarea>
+    <button onclick="saveNote()">Notiz speichern</button>
+    <h3>Kommentare</h3>
+    <div id="comments-section"></div>
+    <textarea class="comment-input" id="comment-input" placeholder="Kommentar hinzufügen..."></textarea>
+    <button onclick="addComment()">Kommentar hinzufügen</button>
+</div>
+
+<script>
+// Monat und Tag anzeigen
+function showMonth(month) {
+    let calendar = document.getElementById('calendar');
+    calendar.innerHTML = ''; // Clear previous calendar
+
+    let daysInMonth = new Date(2025, month, 0).getDate(); // Get number of days in the month
+
+    for (let i = 1; i <= daysInMonth; i++) {
+        let day = document.createElement('div');
+        day.classList.add('day');
+        day.innerHTML = i;
+        day.onclick = function() { showDay(i, month); };
+        calendar.appendChild(day);
+    }
+}
+
+// Tagesdetails anzeigen
+function showDay(day, month) {
+    let dayHeader = document.getElementById('day-header');
+    let noteInput = document.getElementById('note-input');
+    let commentsSection = document.getElementById('comments-section');
+    let commentInput = document.getElementById('comment-input');
+    let dayDetails = document.getElementById('day-details');
+
+    dayHeader.innerHTML = `Details für den ${day}. ${getMonthName(month)} 2025`;
+    noteInput.value = ''; // Clear the note input
+    commentsSection.innerHTML = ''; // Clear previous comments
+    commentInput.value = ''; // Clear the comment input
+
+    // Hier könnte man Notizen und Kommentare aus einer Datenbank laden, z. B. mit Firebase.
+
+    dayDetails.style.display = 'block';
+}
+
+// Monatname für Anzeige
+function getMonthName(month) {
+    const months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    return months[month - 1];
+}
+
+// Notiz speichern (Hier könnte man später Firebase oder eine andere Datenbank verwenden)
+function saveNote() {
+    let note = document.getElementById('note-input').value;
+    if (note) {
+        alert('Notiz gespeichert: ' + note);
+    } else {
+        alert('Bitte gib eine Notiz ein.');
+    }
+}
+
+// Kommentar hinzufügen
+function addComment() {
+    let comment = document.getElementById('comment-input').value;
+    if (comment) {
+        let commentBox = document.createElement('div');
+        commentBox.classList.add('comment-box');
+        commentBox.innerHTML = `<strong>Kommentar:</strong> ${comment}`;
+        document.getElementById('comments-section').appendChild(commentBox);
+        document.getElementById('comment-input').value = ''; // Clear the comment input
+    } else {
+        alert('Bitte gib einen Kommentar ein.');
+    }
+}
+</script>
+
+</body>
+</html>
