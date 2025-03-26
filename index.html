@@ -101,43 +101,35 @@
     <button onclick="addComment()">Kommentar hinzufügen</button>
 </div>
 
-<script>
-// Monat und Tag anzeigen
+<body>
+    <h1>2025 Zeitstrahl</h1>
     <div id="calendar"></div>
-function showMonth(month) {
-    let calendar = document.getElementById('calendar');
-    calendar.innerHTML = ''; // Vorherige Inhalte löschen
-    calendar.style.display = 'block'; // Falls versteckt, anzeigen
 
-    let daysInMonth = new Date(2025, month, 0).getDate(); // Anzahl der Tage im Monat
+    <script>
+        function showMonth(month) {
+            let calendar = document.getElementById('calendar');
+            if (!calendar) return;
 
-    for (let i = 1; i <= daysInMonth; i++) {
-        let day = document.createElement('div');
-        day.classList.add('day');
-        day.innerHTML = i;
-        day.onclick = function() { showDay(i, month); };
-        calendar.appendChild(day);
-    }
-}
+            calendar.innerHTML = ''; 
+            calendar.style.display = 'block'; 
 
+            let daysInMonth = new Date(2025, month, 0).getDate(); 
 
-// Tagesdetails anzeigen
-function showDay(day, month) {
-    let dayHeader = document.getElementById('day-header');
-    let noteInput = document.getElementById('note-input');
-    let commentsSection = document.getElementById('comments-section');
-    let commentInput = document.getElementById('comment-input');
-    let dayDetails = document.getElementById('day-details');
+            for (let i = 1; i <= daysInMonth; i++) {
+                let day = document.createElement('div');
+                day.classList.add('day');
+                day.textContent = i;
+                day.onclick = function() { showDay(i, month); };
+                calendar.appendChild(day);
+            }
+        }
 
-    dayHeader.innerHTML = `Details für den ${day}. ${getMonthName(month)} 2025`;
-    noteInput.value = ''; // Clear the note input
-    commentsSection.innerHTML = ''; // Clear previous comments
-    commentInput.value = ''; // Clear the comment input
+        function showDay(day, month) {
+            alert(`Tag: ${day}, Monat: ${month}`);
+        }
+    </script>
+</body>
 
-    // Hier könnte man Notizen und Kommentare aus einer Datenbank laden, z. B. mit Firebase.
-
-    dayDetails.style.display = 'block';
-}
 
 // Monatname für Anzeige
 function getMonthName(month) {
