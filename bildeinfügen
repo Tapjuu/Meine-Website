@@ -1,10 +1,11 @@
-<input type="file" id="file-input" accept="image/*">
+<input type="file" id="file-input" accept="image/*" multiple>
 <div id="preview-container"></div>
 
 <script>
 document.getElementById("file-input").addEventListener("change", function(event) {
-    let file = event.target.files[0];
-    if (file) {
+    let files = event.target.files;
+    document.getElementById("preview-container").innerHTML = ""; // Leert die Vorschau vorher
+    for (let file of files) {
         let reader = new FileReader();
         reader.onload = function(e) {
             let img = document.createElement("img");
@@ -15,4 +16,12 @@ document.getElementById("file-input").addEventListener("change", function(event)
         reader.readAsDataURL(file);
     }
 });
+
+#preview-container img {
+    max-width: 300px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
 </script>
